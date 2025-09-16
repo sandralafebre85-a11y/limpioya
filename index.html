@@ -1,0 +1,698 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LimpioY!DOCTYPE html>A! - INIF N°48</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif; /* Usando Inter como se recomienda */
+      background: linear-gradient(135deg, #FFEFD3, #D9EDF7); /* Tonos pasteles */
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-image: radial-gradient(#F9D9D9 1px, transparent 1px); /* Mini estrellas pastel */
+      background-size: 20px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #B5EAD7; /* Color pastel para el encabezado */
+      color: #4CAF50; /* Texto en contraste con el pastel */
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    /* El logo ha sido removido según la solicitud */
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    .container {
+      padding: 1rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      flex-grow: 1;
+    }
+    .hidden {
+      display: none !important; /* Usar !important para asegurar que se oculte */
+    }
+    .role-buttons button {
+      background: #FFD3B6; /* Color pastel */
+      border: none;
+      padding: 1rem;
+      margin: 0.5rem;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .role-buttons button:hover {
+      background: #FFAAA5; /* Color pastel al pasar el ratón */
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+    .report-form, .reports-section, .avisos-section, .notificaciones, .access-options, .role-access-buttons, .correo {
+      background: #FFFBF0; /* Fondo más claro para secciones */
+      border-radius: 15px; /* Bordes más redondeados */
+      padding: 1.5rem;
+      margin-top: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid #ffeeba; /* Borde sutil pastel */
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box; /* Importante para padding y ancho */
+    }
+    button.submit-btn {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: #FFC0CB; /* Color pastel para botones de envío */
+      border: none;
+      color: white;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    button.submit-btn:hover {
+      background: #FFB3C7; /* Tono más oscuro al pasar el ratón */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+    .banner {
+      background-color: #E0FFD3; /* Tono pastel para banners */
+      color: #333;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+      border-radius: 10px;
+      font-weight: bold;
+      border: 1px solid #c8e0bd;
+    }
+    .preview-img {
+      margin-top: 10px;
+      max-width: 100%;
+      height: auto; /* Asegura que la imagen se adapte */
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    /* Estilos para el modal personalizado */
+    .custom-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .custom-modal-content {
+      background-color: #FFFBF0;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    .custom-modal-content h3 {
+      color: #FF8B94;
+      margin-top: 0;
+    }
+    .custom-modal-content input {
+      margin-bottom: 1rem;
+    }
+    .custom-modal-content button {
+      background: #FFC0CB;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .custom-modal-content button:hover {
+      background: #FFB3C7;
+      transform: translateY(-1px);
+    }
+
+    /* Estilos para la pantalla de Acceso Denegado */
+    .access-denied-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #FFCCCC, #FFDDC1); /* Fondo pastel de error */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: #D32F2F; /* Rojo para el mensaje de error */
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      text-align: center;
+      flex-direction: column;
+    }
+    .access-denied-overlay span {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: #E57373;
+    }
+
+    /* Estilos para la selección de tipo de acceso (Código/QR) */
+    .access-options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .access-options-container button {
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      border-radius: 15px;
+      background: #B5EAD7;
+      color: #333;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .access-options-container button:hover {
+      background: #A8DBCA;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .custom-modal-content {
+        padding: 1.5rem;
+      }
+      .access-denied-overlay {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Overlay para el modal personalizado -->
+  <div id="customModalOverlay" class="custom-modal-overlay hidden">
+    <div class="custom-modal-content">
+      <h3 id="customModalTitle"></h3>
+      <p id="customModalMessage"></p>
+      <input type="text" id="customModalInput" class="hidden" />
+      <input type="password" id="customModalPasswordInput" class="hidden" />
+      <button id="customModalConfirmBtn">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Overlay para Acceso Denegado (permanente) -->
+  <div id="accessDeniedOverlay" class="access-denied-overlay hidden">
+    Acceso Denegado
+    <span>Por favor, verifica tu código e inténtalo de nuevo.</span>
+  </div>
+
+  <!-- Contenido principal de la aplicación -->
+  <div id="mainAppContent">
+    <header>
+      <!-- Encabezado restaurado a su versión anterior con el nombre de la institución -->
+      <h1>LimpioYA! - INIF N°48</h1>
+    </header>
+
+    <div class="container">
+      <!-- Sección para elegir tipo de acceso (Código vs Correo) -->
+      <section id="accessChoiceSection" class="access-options">
+        <h2>Bienvenido</h2>
+        <div class="access-options-container">
+          <button onclick="handleCodeAccess()">🔑 Ingresar con Código (Roles específicos)</button>
+          <button onclick="handleEmailAccess()">📧 Ingresar con Correo (Todos los demás Roles)</button>
+        </div>
+      </section>
+
+      <!-- Sección de selección de rol para acceso con código -->
+      <section id="codeAccessRoleSelection" class="role-access-buttons hidden">
+        <h2>👥 Selecciona tu rol con código</h2>
+        <div class="role-buttons">
+          <button onclick="validarRolConCodigo('director')">🎓 Director</button>
+          <button onclick="validarRolConCodigo('subdirector')">📋 Subdirector</button>
+          <button onclick="validarRolConCodigo('auxiliar')">🛎 Auxiliar</button>
+          <button onclick="validarRolConCodigo('limpieza')">🧹 Personal de Limpieza</button> <!-- Personal de Limpieza ahora va con código -->
+        </div>
+        <button class="submit-btn" onclick="goBackToAccessChoice()">⬅️ Volver</button>
+      </section>
+
+      <div id="appSections" class="hidden">
+        <div class="correo" id="correoSection">
+          <h3>📧 Ingresa tu correo institucional</h3>
+          <input type="email" id="correo" placeholder="nombre@inif.edu.pe" required />
+          <button class="submit-btn" onclick="validarCorreo()">Ingresar</button>
+        </div>
+
+        <div id="contenidoApp" class="hidden">
+          <section class="notificaciones">
+            <h2>🔔 Notificaciones</h2>
+            <div id="notis"></div>
+          </section>
+
+          <section class="role-selection" id="roleSelectionSection">
+            <h2>👥 Selecciona tu rol</h2>
+            <div class="role-buttons">
+              <button onclick="validarRolSinCodigo('estudiante')">🎒 Estudiante</button>
+              <button onclick="validarRolSinCodigo('profesor')">📚 Profesor</button>
+              <button onclick="validarRolSinCodigo('personalKiosko')">🍔 Personal del Kiosko</button>
+              <button onclick="validarRolSinCodigo('visitante')">👤 Visitante</button>
+            </div>
+            <button class="submit-btn" onclick="goBackToAccessChoice()">⬅️ Volver</button>
+          </section>
+
+          <section class="report-form hidden" id="formularioReporte">
+            <h2>📝 Reportar zona sucia</h2>
+            <form onsubmit="enviarReporte(event)">
+              <label>📍 Ubicación</label>
+              <input type="text" id="ubicacion" placeholder="Ej: Baño del primer patio" required />
+
+              <label>✏️ Descripción</label>
+              <textarea id="descripcion" placeholder="Escribe qué encontraste sucio..." required></textarea>
+
+              <label>📷 Subir imagen (opcional)</label>
+              <input type="file" accept="image/*" id="foto" onchange="mostrarImagen(event)" />
+              <img id="preview" class="preview-img" alt="Vista previa de la imagen" />
+
+              <button class="submit-btn" type="submit">Enviar Reporte</button>
+            </form>
+          </section>
+
+          <section class="avisos-section hidden" id="avisos">
+            <h2>📢 Avisos del colegio</h2>
+            <form onsubmit="publicarAviso(event)">
+              <textarea id="avisoTexto" placeholder="Escribe un aviso importante..."></textarea>
+              <button class="submit-btn" type="submit">Publicar aviso</button>
+            </form>
+            <div id="listaAvisos"></div>
+          </section>
+
+          <section class="reports-section">
+            <h2>📑 Reportes del día</h2>
+            <div id="reportes"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let rolActual = "";
+    let userEmail = ""; // Para almacenar el correo del usuario
+    let notificationsGranted = false; // Estado para el permiso de notificaciones
+
+    // ===========================================
+    // Funciones para el modal personalizado (reemplazo de alert/prompt)
+    // ===========================================
+    function showCustomPrompt(title, message, callback, isPassword = false, type = 'text') {
+      const modalOverlay = document.getElementById("customModalOverlay");
+      const modalTitle = document.getElementById("customModalTitle");
+      const modalMessage = document.getElementById("customModalMessage");
+      const modalInput = document.getElementById("customModalInput");
+      const modalPasswordInput = document.getElementById("customModalPasswordInput");
+      const confirmBtn = document.getElementById("customModalConfirmBtn");
+
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+
+      modalInput.classList.add("hidden");
+      modalPasswordInput.classList.add("hidden");
+
+      let inputElement;
+      if (isPassword) {
+        modalPasswordInput.classList.remove("hidden");
+        inputElement = modalPasswordInput;
+        inputElement.value = ''; // Limpiar campo
+      } else if (type === 'text') {
+        modalInput.classList.remove("hidden");
+        inputElement = modalInput;
+        inputElement.value = ''; // Limpiar campo
+      } else { // For simple messages, no input element needed for events
+        inputElement = { value: '' }; // Dummy input for callbacks that don't need it
+      }
+
+      modalOverlay.classList.remove("hidden");
+
+      const handleConfirm = () => {
+        modalOverlay.classList.add("hidden");
+        callback(inputElement.value);
+        // Solo intentar remover listeners si inputElement es un elemento HTML real
+        if (inputElement && inputElement.tagName === 'INPUT') {
+            confirmBtn.removeEventListener('click', handleConfirm);
+            inputElement.removeEventListener('keypress', handleKeyPress);
+        }
+      };
+
+      const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          handleConfirm();
+        }
+      };
+
+      confirmBtn.addEventListener('click', handleConfirm);
+      if (inputElement && inputElement.tagName === 'INPUT') { // Solo añadir listener si inputElement es un elemento HTML real
+        inputElement.addEventListener('keypress', handleKeyPress);
+        inputElement.focus();
+      }
+    }
+
+    function showCustomMessage(title, message, callback = () => {}) {
+      showCustomPrompt(title, message, callback, false, 'message');
+      document.getElementById("customModalInput").classList.add("hidden");
+      document.getElementById("customModalPasswordInput").classList.add("hidden");
+    }
+
+    // ===========================================
+    // Lógica de Acceso Inicial y Roles
+    // ===========================================
+    window.onload = function() {
+      // Mostrar directamente la sección de elección de acceso (Código/Correo) al cargar la página
+      document.getElementById("mainAppContent").classList.remove("hidden"); // Asegurar que el contenedor principal esté visible
+      document.getElementById("accessChoiceSection").classList.remove("hidden"); // Mostrar directamente los botones
+
+      // Aseguramos que todas las demás secciones estén ocultas al inicio
+      document.getElementById("codeAccessRoleSelection").classList.add("hidden");
+      document.getElementById("appSections").classList.add("hidden");
+      document.getElementById("correoSection").classList.add("hidden");
+      document.getElementById("roleSelectionSection").classList.add("hidden");
+      document.getElementById("formularioReporte").classList.add("hidden");
+      document.getElementById("avisos").classList.add("hidden");
+      document.getElementById("contenidoApp").classList.add("hidden");
+      
+      mostrarReportes(); // Cargar reportes al inicio
+      mostrarAvisos(); // Cargar avisos al inicio
+    };
+
+    function goBackToAccessChoice() {
+      document.getElementById("appSections").classList.add("hidden");
+      document.getElementById("codeAccessRoleSelection").classList.add("hidden");
+      document.getElementById("accessChoiceSection").classList.remove("hidden"); 
+      rolActual = ""; // Resetear rol al volver
+      userEmail = ""; // Resetear email al volver
+      document.getElementById("notis").innerHTML = ""; // Limpiar notificaciones
+      // Asegurarse de ocultar las secciones específicas si se vuelve atrás
+      document.getElementById("correoSection").classList.add("hidden");
+      document.getElementById("roleSelectionSection").classList.add("hidden");
+      document.getElementById("contenidoApp").classList.add("hidden");
+      document.getElementById("formularioReporte").classList.add("hidden"); 
+      document.getElementById("avisos").classList.add("hidden"); 
+    }
+
+    // Maneja la elección de "Ingresar con Código"
+    function handleCodeAccess() {
+      document.getElementById("accessChoiceSection").classList.add("hidden");
+      document.getElementById("codeAccessRoleSelection").classList.remove("hidden");
+      document.getElementById("appSections").classList.add("hidden"); // Asegurar que las secciones principales estén ocultas
+    }
+
+    // Maneja la elección de "Ingresar con Correo" (anteriormente "Ingresar con QR")
+    function handleEmailAccess() { /* Fix: Removed duplicate 'function' keyword */
+      document.getElementById("accessChoiceSection").classList.add("hidden");
+      document.getElementById("appSections").classList.remove("hidden"); // Mostrar la sección de app general
+
+      // Aseguramos que solo la sección de correo esté visible inicialmente dentro de appSections
+      document.getElementById("correoSection").classList.remove("hidden");
+      document.getElementById("roleSelectionSection").classList.add("hidden");
+      document.getElementById("contenidoApp").classList.add("hidden"); // Ocultar el resto del contenido hasta validar correo
+
+      // Solicitar permiso de notificaciones para los roles que entran por Correo, pero SIN mostrar mensaje de "Denegado"
+      requestNotificationPermission();
+    }
+
+
+    function validarCorreo() {
+      const correoInput = document.getElementById("correo").value;
+      const emailRegex = /^[a-zA-Z0-9.]+@inif\.edu\.pe$/; // Regex para nombre.apellido@inif.edu.pe
+      
+      if (!emailRegex.test(correoInput)) {
+        showCustomMessage("Correo Institucional Inválido", "❌ El correo debe tener el formato 'nombre@inif.edu.pe' y no puede estar vacío.");
+        return;
+      }
+      userEmail = correoInput; // Guardar el correo validado
+      showCustomMessage("¡Bienvenido!", `✅ Notificaciones activadas para: ${userEmail}`);
+      document.getElementById("notis").innerHTML = `<div class='banner'>✅ Bienvenido, notificaciones activadas para: ${userEmail}</div>`;
+      
+      document.getElementById("correoSection").classList.add("hidden"); // Ocultar la sección de correo
+      document.getElementById("roleSelectionSection").classList.remove("hidden"); // Mostrar la selección de rol
+      document.getElementById("contenidoApp").classList.remove("hidden"); // Mostrar el contenido principal, incluyendo reportes, etc.
+    }
+
+    function validarRolConCodigo(rol) {
+      rolActual = rol;
+      // Roles que requieren código especial para este camino de "Ingresar con Código"
+      const codigosValidos = {
+        director: "2025DIRX",
+        subdirector: "2025SUB",
+        auxiliar: "2025AUX",
+        limpieza: "2025LIM", // Personal de Limpieza ahora requiere código
+      };
+
+      // Roles que tienen permiso para publicar avisos
+      const rolesConPermisoAvisos = ['director', 'subdirector', 'auxiliar', 'limpieza']; 
+
+      showCustomPrompt(
+        "Código Institucional",
+        `🔑 Ingresa tu código institucional para ${rol}:`,
+        (codigo) => {
+          if (codigo === codigosValidos[rol]) {
+            showCustomMessage("Acceso Autorizado", `✅ Acceso autorizado como ${rol}.`);
+            document.getElementById("formularioReporte").classList.remove("hidden");
+            document.getElementById("contenidoApp").classList.remove("hidden"); // Asegura que el contenido esté visible
+            document.getElementById("appSections").classList.remove("hidden"); // Muestra las secciones principales
+
+            // Oculta la selección de rol con código
+            document.getElementById("codeAccessRoleSelection").classList.add("hidden");
+
+            // El correo se auto-asigna para estos roles y notificaciones se consideran activadas
+            userEmail = `${rol}@inif.edu.pe`;
+            document.getElementById("notis").innerHTML = `<div class='banner'>✅ Bienvenido, notificaciones activadas para: ${userEmail}</div>`;
+            document.getElementById("correoSection").classList.add('hidden'); // Ocultar sección de correo
+            document.getElementById("roleSelectionSection").classList.add('hidden'); // Ocultar selección de rol general
+
+            if (rolesConPermisoAvisos.includes(rolActual)) {
+              document.getElementById("avisos").classList.remove("hidden");
+            } else {
+              document.getElementById("avisos").classList.add("hidden");
+            }
+            console.log("Notificaciones activadas automáticamente para el rol con código.");
+            mostrarReportes(); // Actualiza los reportes con el rol actual
+          } else {
+            showCustomMessage("Código Incorrecto", "❌ Código incorrecto. Acceso denegado para este rol.");
+            rolActual = ""; // Resetear el rol si el código es incorrecto
+          }
+        },
+        true // Es un campo de contraseña
+      );
+    }
+
+    function validarRolSinCodigo(rol) {
+      rolActual = rol; // El rol ya está asignado (ej. estudiante, profesor, etc.)
+
+      // Roles que tienen permiso para publicar avisos
+      const rolesConPermisoAvisos = ['director', 'subdirector', 'auxiliar', 'limpieza'];
+
+      showCustomMessage("Bienvenido", `👋 Bienvenido como ${rol}.`);
+      document.getElementById("formularioReporte").classList.remove("hidden");
+
+      // Asegurarse de que la sección de avisos esté visible/oculta según el permiso
+      if (rolesConPermisoAvisos.includes(rolActual)) {
+        document.getElementById("avisos").classList.remove("hidden");
+      } else {
+        document.getElementById("avisos").classList.add("hidden");
+      }
+      // Las notificaciones ya se habrán pedido al elegir "Ingresar con Correo"
+      mostrarReportes(); // Actualiza los reportes con el rol actual
+      document.getElementById("roleSelectionSection").classList.add("hidden"); // Ocultar la selección de rol después de elegir
+    }
+
+    // ===========================================
+    // Funciones de Reportes
+    // ===========================================
+    const naughtyWords = ["subido", "tono", "obsceno", "grosero", "malo", "feo"]; // Lista de palabras a moderar
+
+    function containsInappropriateContent(text) {
+      const lowerText = text.toLowerCase();
+      return naughtyWords.some(word => lowerText.includes(word));
+    }
+
+    function enviarReporte(event) {
+      event.preventDefault();
+      const ubicacion = document.getElementById("ubicacion").value;
+      const descripcion = document.getElementById("descripcion").value;
+      const foto = document.getElementById("preview").src;
+      const ahora = new Date();
+      const hora = ahora.toLocaleTimeString();
+      const fecha = ahora.getTime(); // Timestamp para la caducidad
+
+      if (containsInappropriateContent(descripcion)) {
+        showCustomMessage("Reporte Bloqueado", "🚫 Tu reporte contiene vocabulario inapropiado. Por favor, sé respetuoso.");
+        return;
+      }
+      // NOTA: La moderación de contenido de la imagen no es directamente factible desde el lado del cliente sin APIs avanzadas.
+      // Se puede añadir una validación de tipo de archivo o tamaño si es necesario, pero no de contenido visual.
+
+      const reporte = { hora, ubicacion, descripcion, foto, fecha, limpio: false };
+
+      let reportes = JSON.parse(localStorage.getItem("reportes") || "[]");
+      reportes.push(reporte);
+      localStorage.setItem("reportes", JSON.stringify(reportes));
+
+      mostrarReportes();
+      document.getElementById("ubicacion").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("foto").value = "";
+      document.getElementById("preview").src = "";
+      showCustomMessage("Reporte Enviado", "📝 Reporte enviado exitosamente. Vigente por 24 horas.");
+    }
+
+    function mostrarImagen(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        document.getElementById("preview").src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function mostrarReportes() {
+      const contenedor = document.getElementById("reportes");
+      contenedor.innerHTML = "";
+      const ahora = Date.now();
+      let reportes = JSON.parse(localStorage.getItem("reportes") || "[]");
+      
+      // Filtrar reportes que aún no han caducado (24 horas = 86400000 milisegundos)
+      reportes = reportes.filter(rep => (ahora - rep.fecha) < 86400000);
+      localStorage.setItem("reportes", JSON.stringify(reportes));
+
+      reportes.forEach((rep, index) => {
+        let html = `<div class='banner'>🕒 [${rep.hora}] 📍 ${rep.ubicacion}: ${rep.descripcion}`;
+        if (rep.foto) html += `<br><button class="submit-btn" onclick='verImagen("${rep.foto}")'>🖼️ Ver Imagen</button>`; // Botón para ver imagen
+        
+        // Solo el personal de limpieza puede marcar como limpio
+        if (!rep.limpio && rolActual === 'limpieza') {
+          html += `<br><button class="submit-btn" onclick='marcarLimpio(${index})'>✅ Marcar como limpio</button>`;
+        }
+        if (rep.limpio) html += "<br>✅ Marcado como limpio";
+        html += "</div>";
+        contenedor.innerHTML += html;
+      });
+    }
+
+    function verImagen(src) {
+      // Abre la imagen en una nueva pestaña o un modal más grande
+      window.open(src, '_blank');
+    }
+
+    function marcarLimpio(index) {
+      if (rolActual !== 'limpieza') {
+        showCustomMessage("Permiso Denegado", "🚫 Solo el Personal de Limpieza puede marcar reportes como limpios.");
+        return;
+      }
+      let reportes = JSON.parse(localStorage.getItem("reportes") || "[]");
+      reportes[index].limpio = true;
+      localStorage.setItem("reportes", JSON.stringify(reportes));
+      mostrarReportes();
+      showCustomMessage("Reporte Actualizado", "El reporte ha sido marcado como limpio.");
+    }
+
+    // ===========================================
+    // Funciones de Avisos
+    // ===========================================
+    function publicarAviso(event) {
+      event.preventDefault();
+      const avisoTexto = document.getElementById("avisoTexto").value;
+      if (!avisoTexto) {
+        showCustomMessage("Campo Vacío", "Por favor, escribe un aviso antes de publicarlo.");
+        return;
+      }
+
+      // Validar si el rol actual tiene permiso para publicar avisos
+      const rolesConPermisoAvisos = ['director', 'subdirector', 'auxiliar', 'limpieza'];
+      if (!rolesConPermisoAvisos.includes(rolActual)) {
+        showCustomMessage("Permiso Denegado", "🚫 Tu rol no tiene permiso para publicar avisos.");
+        return;
+      }
+
+      const ahora = new Date();
+      const hora = ahora.toLocaleTimeString();
+      const fecha = ahora.getTime();
+      const aviso = { texto: avisoTexto, hora, fecha, autor: userEmail || rolActual };
+
+      let avisos = JSON.parse(localStorage.getItem("avisos") || "[]");
+      avisos.push(aviso);
+      localStorage.setItem("avisos", JSON.stringify(avisos));
+
+      mostrarAvisos();
+      document.getElementById("avisoTexto").value = "";
+      showCustomMessage("Aviso Publicado", "📢 Tu aviso ha sido publicado y estará visible por 24 horas.");
+    }
+
+    function mostrarAvisos() {
+      const listaAvisos = document.getElementById("listaAvisos");
+      listaAvisos.innerHTML = "";
+      const ahora = Date.now();
+      let avisos = JSON.parse(localStorage.getItem("avisos") || "[]");
+
+      // Filtrar avisos que aún no han caducado (24 horas)
+      avisos = avisos.filter(aviso => (ahora - aviso.fecha) < 86400000);
+      localStorage.setItem("avisos", JSON.stringify(avisos));
+
+      avisos.forEach((aviso) => {
+        listaAvisos.innerHTML += `<div class='banner'>📢 [${aviso.hora}] (${aviso.autor}): ${aviso.texto}</div>`;
+      });
+    }
+
+    // ===========================================
+    // Funciones de Notificaciones del navegador
+    // ===========================================
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) {
+        console.log("Este navegador no soporta notificaciones de escritorio.");
+        return;
+      }
+
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          console.log("Permiso de notificaciones concedido.");
+          notificationsGranted = true;
+          // Se podría enviar una notificación de bienvenida si se desea
+          // new Notification("Bienvenido a LimpioYA!", { body: "Las notificaciones están activadas." });
+        } else if (permission === "denied") {
+          console.log("Permiso de notificaciones denegado. No se mostrará un mensaje al usuario.");
+          notificationsGranted = false;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
